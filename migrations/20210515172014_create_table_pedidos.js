@@ -9,6 +9,7 @@ exports.up = function(knex, Promise) {
         table.integer('id_produtos').notNull().references('id_produtos')
              .inTable('produtos').notNull
         table.string('status').notNull() 
+        table.datetime('datapedido').notNull() 
          
     }) 
 };

@@ -30,7 +30,48 @@ module.exports = app => {
 
     app.route('/pedidos/:id_pedido') ///toggle
        .all(app.config.passport.authenticate()) 
-       .put(app.api.pedidos.togglePedidos)     
+       .put(app.api.pedidos.togglePedidos)  
+       
+       
+    //Metodos usuarios
+    app.route('/usuario')
+       .get(app.api.usuario.PesqUsuario)
+       .post(app.api.usuario.save)  
+
+    app.route('/usuario/:id_usuario')       
+       .delete(app.api.usuario.remove)   
+
+    app.route('/usuario/:id_usuario')        
+       .put(app.api.usuario.toggleUsuario)    
+       
+    //Metodos configurações do usuario
+    app.route('/configuracao')
+       .get(app.api.configuracao.PesqConfiguracao)
+       .post(app.api.configuracao.save)  
+
+    app.route('/configuracoes/:id_config')       
+       .delete(app.api.configuracao.remove)   
+
+    app.route('/configuracoes/:id_config')        
+       .put(app.api.configuracao.toggleConfiguracao) 
+       
+    //Metodos tela home do usuario {produtos,fotos e valores}      
+    app.route('/homeusu')
+       .get(app.api.homeusu.PesqHome)   
+       
+       
+    //Filtros para front-end usuario   
+    app.route('/listproducts')
+       .get(app.api.filtros.getListProdutos) 
+   
+    //pedidos do usuario   
+    app.route('/listpedidos')
+       .get(app.api.filtros.getListPedidos)    
+    
+    //pedidos do usuario   
+    app.route('/pedidocompra')
+       .post(app.api.filtros.PedidoDeCompra)     
+          
 
 
 }
