@@ -39,6 +39,31 @@ module.exports = app => {
         
     }
 
+    const getpedidosloja = (req, res) => {
+        // app.db('pedidos')
+        // .innerJoin('produtos', 'pedidos.id_produtos', '=', 'produtos.id_produtos') 
+        // .innerJoin('usuario', 'usuario.id_usuario', '=', 'pedidos.id_cliente') 
+        // .where({id_usuario: req.body.id_usuario})                                
+        // .then(pedidos => res.json({
+        //                           logradouro: pedidos.logradouro,
+        //                           bairro: pedidos.bairro,
+        //                           numero: pedidos.numero,
+        //                           tel_cuidador: pedidos.tel_cuidador,
+        //                           status: pedidos.status,
+        //                           nome: pedidos.nome,
+        //                           datapedido: pedidos.datapedido, 
+        //                           id_usuario : pedidos.id_usuario ,                                
+        //                         }) )
+        // .catch(err => res.status(400).json(err))     
+        // console.log(req.user.id)
+        // app.db('pedidos')
+        //    .innerJoin('produtos', 'pedidos.id_produtos', '=', 'produtos.id_produtos') 
+        //    .innerJoin('usuario', 'usuario.id_usuario', '=', 'pedidos.id_cliente') 
+        //    .where({ id_loja: req.user.id })
+        //    .then(pedidos => res.json(pedidos))  
+        //    .catch(err => res.status(400).json(err))   
+     }   
+
     
     return { getListProdutos, getListPedidos, PedidoDeCompra }
 

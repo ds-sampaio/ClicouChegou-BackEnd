@@ -9,7 +9,7 @@ module.exports = app => {
         .then(configuracoes => res.json(configuracoes))
         .catch(err => res.status(400).json(err))              
        
-}   
+    }   
      const PesqHome = (req, res) => {
          app.db('configuracoes')
             .where({id_usuario: req.body.id_usuario })

@@ -61,6 +61,15 @@ module.exports = app => {
            .catch(err => res.status(400).json(err))
     }
 
-    return { getPedidos, save, remove, togglePedidos }
+
+    const getpedidosloja = (req, res) => {       
+        app.db('pedidos')
+               .innerJoin('produtos', 'pedidos.id_produtos', '=', 'produtos.id_produtos') 
+               .innerJoin('usuario', 'usuario.id_usuario', '=', 'pedidos.id_cliente') 
+               .where({ 'pedidos.id_loja': req.user.id })
+               .then(pedidos => res.json(pedidos))
+               .catch(err => res.status(400).json(err))     }   
+
+    return { getPedidos, save, remove, togglePedidos,getpedidosloja }
 
 }

@@ -21,7 +21,7 @@ module.exports = app => {
                     status  : req.body.status, 
                     password ,
                     cnpj_cpf  : req.body.cnpj_cpf, 
-                    email: req.body.email, 
+                    email: req.body.email.toLowerCase(), 
                 })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(400).json(err))

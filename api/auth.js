@@ -11,7 +11,7 @@ module.exports = app => {
         }
 
         const user = await app.db('loja')
-              .where({ email: req.body.email})
+              .whereRaw("LOWER(email) = LOWER(?)", req.body.email)
               .first()
         //compara se senha da requisição é igual ao do banco de dados
         if (user){

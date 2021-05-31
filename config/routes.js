@@ -31,6 +31,10 @@ module.exports = app => {
     app.route('/pedidos/:id_pedido') ///toggle
        .all(app.config.passport.authenticate()) 
        .put(app.api.pedidos.togglePedidos)  
+  
+      app.route('/pedidoloja')
+         .all(app.config.passport.authenticate())
+         .get(app.api.pedidos.getpedidosloja)     
        
        
     //Metodos usuarios
