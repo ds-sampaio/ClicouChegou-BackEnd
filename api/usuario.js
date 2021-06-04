@@ -24,6 +24,29 @@ module.exports = app => {
            .catch(err => res.status(400).json(err))
     }
 
+    const getUsuCpf = (req, res) => {
+        app.db('usuario')
+        .where({ cpf: req.body.cpf})
+        .then(usuario => res.json(usuario))
+        .catch(err => res.status(400).json(err))              
+       
+}
+
+    const PesqUsuarioCpf = (req, res) => {
+        app.db('usuario')
+           .where({cpf: req.body.cpf})
+           .first()
+           .then(usuario => {
+               if (!usuario) {
+                   const msg = `Usuario com id ${req.body.cpf} não encontrada.`
+                   return res.status(400).send(msg) 
+               }
+
+               getUsuCpf(req, res, req.body)
+           })
+           .catch(err => res.status(400).json(err))
+    }
+
     const save = (req, res) => {
         if (!req.body.nome.trim()) {
             return res.status(400).send('Nome é um campo obrigatorio')
@@ -35,7 +58,7 @@ module.exports = app => {
             return res.status(400).send('Telefone do cuidador é um campo obrigatorio')
         }
         
-  
+        console.log(req.body)
         app.db('usuario')
            .insert(req.body)
            .then(_ => res.status(204).send())
@@ -81,6 +104,6 @@ module.exports = app => {
            .catch(err => res.status(400).json(err))
     }
 
-    return { PesqUsuario, save, remove, toggleUsuario }
+    return { PesqUsuario, save, remove, toggleUsuario, PesqUsuarioCpf }
 
 }

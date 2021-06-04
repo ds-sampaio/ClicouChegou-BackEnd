@@ -2,6 +2,10 @@ module.exports = app => {
     app.post('/signup', app.api.loja.save)
     app.post('/signin', app.api.auth.signin)
 
+    app.route('/loja')
+       .all(app.config.passport.authenticate())
+       .get(app.api.loja.getLoja)
+       .put(app.api.loja.atualizaLoja)
 
     app.route('/produtos')
        .all(app.config.passport.authenticate())
@@ -15,6 +19,10 @@ module.exports = app => {
     app.route('/produtos/:id_produtos') ///toggle
        .all(app.config.passport.authenticate()) 
        .put(app.api.produto.toggleProduto)  
+
+    app.route('/produtos/:id_produtos')
+       .all(app.config.passport.authenticate())
+       .get(app.api.produto.getProdutosId)
        
        
    //Metodos pedidos {lado da empresa}
@@ -46,7 +54,10 @@ module.exports = app => {
        .delete(app.api.usuario.remove)   
 
     app.route('/usuario/:id_usuario')        
-       .put(app.api.usuario.toggleUsuario)    
+       .put(app.api.usuario.toggleUsuario)         
+       
+   app.route('/usucpf')        
+      .get(app.api.usuario.PesqUsuarioCpf)       
        
     //Metodos configurações do usuario
     app.route('/configuracao')
@@ -69,8 +80,8 @@ module.exports = app => {
        .get(app.api.filtros.getListProdutos) 
    
     //pedidos do usuario   
-    app.route('/listpedidos')
-       .get(app.api.filtros.getListPedidos)    
+   //  app.route('/listpedidos')
+   //     .get(app.api.filtros.getListPedidos)    
     
     //pedidos do usuario   
     app.route('/pedidocompra')

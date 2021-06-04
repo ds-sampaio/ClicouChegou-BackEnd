@@ -28,5 +28,29 @@ module.exports = app => {
         })
     }
 
-    return { save }
+    const getLoja = (req, res) => {
+        obterHash(req.body.password, hash => {
+            const password = hash
+            app.db('loja')
+            .where({id: req.user.id})
+            .then(loja => res.json(loja))
+            .catch(err => res.status(400).json(err))
+        })
+    }
+    
+    const atualizaLoja = (req, res) => {
+        obterHash(req.body.password, hash => {
+            const password = hash
+            console.log(req.user.id)
+            app.db('loja')
+            .where({id: req.user.id})
+            .update(req.body)
+            .then(_ => res.status(204).send())
+            .catch(err => res.status(400).json(err))
+        })
+    }
+   
+
+
+    return { save ,getLoja, atualizaLoja}
 }

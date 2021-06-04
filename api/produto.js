@@ -8,6 +8,13 @@ module.exports = app => {
            .catch(err => res.status(400).json(err))
     }
 
+    const getProdutosId = (req, res) => {
+        app.db('produtos')
+           .where({ id_produtos: req.params.id_produtos, id_loja: req.user.id})
+           .then(produtos => res.json(produtos))
+           .catch(err => res.status(400).json(err))
+    }
+
     const save = (req, res) => {
         if (!req.body.descricao.trim()) {
             return res.status(400).send('Descrição é um campo obrigatorio')
@@ -60,6 +67,6 @@ module.exports = app => {
            .catch(err => res.status(400).json(err))
     }
 
-    return { getProdutos, save, remove, toggleProduto }
+    return { getProdutos, save, remove, toggleProduto,getProdutosId }
 
 }
