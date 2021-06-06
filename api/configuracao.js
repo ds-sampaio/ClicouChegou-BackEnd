@@ -23,6 +23,28 @@ module.exports = app => {
            .catch(err => res.status(400).json(err))
     }
 
+    const getConfiguracaoUsu = (req, res) => {
+        app.db('configuracoes')
+        .where({id_usuario: req.body.id_usuario })
+        .then(configuracoes => res.json(configuracoes))
+        .catch(err => res.status(400).json(err))              
+       
+    }
+
+    const PesqConfiguracaoUsu = (req, res) => {
+        app.db('configuracoes')
+        .where({id_usuario: req.body.id_usuario })
+        .first()
+        .then(configuracoes => {
+            if (!configuracoes) {
+                const msg = `Configuracoes com id ${req.body.id_config} não encontrada.`
+                return res.status(400).send(msg) 
+            }
+            getConfiguracaoUsu(req, res, req.body)
+        })
+        .catch(err => res.status(400).json(err))
+    }
+
     const save = (req, res) => {
         if (!req.body.id_loja) {
             return res.status(400).send('Loja é um campo obrigatorio')
@@ -100,6 +122,6 @@ module.exports = app => {
            .catch(err => res.status(400).json(err))
     }
 
-    return { PesqConfiguracao, save, remove, toggleConfiguracao }
+    return { PesqConfiguracao, save, remove, toggleConfiguracao ,PesqConfiguracaoUsu}
 
 }

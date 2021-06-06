@@ -25,6 +25,7 @@ module.exports = app => {
     }
 
     const getUsuCpf = (req, res) => {
+        console.log(req.body.cpf)
         app.db('usuario')
         .where({ cpf: req.body.cpf})
         .then(usuario => res.json(usuario))
@@ -33,6 +34,7 @@ module.exports = app => {
 }
 
     const PesqUsuarioCpf = (req, res) => {
+        console.log(req.body.cpf)
         app.db('usuario')
            .where({cpf: req.body.cpf})
            .first()
@@ -67,13 +69,13 @@ module.exports = app => {
 
     const remove = (req, res) => {
         app.db('usuario')
-           .where({id_usuario:  req.params.id_usuario})
+           .where({cpf:  req.params.cpf})
            .del()
            .then(rowsDeleted => {
                if (rowsDeleted > 0) {
                    res.status(204).send()
                } else {
-                   const msg = `Não foi encontrado usuario com id ${req.parms.id_usuario}.`
+                   const msg = `Não foi encontrado usuario com cpf ${req.parms.cpf}.`
                    res.status(400).send(msg)
                }
            }) 
@@ -82,19 +84,20 @@ module.exports = app => {
 
     const updateUsuarioDoneAt = (req, res) => {
         app.db('usuario')
-            .where({ id_usuario: req.params.id_usuario})
+            .where({ cpf: req.params.cpf})
             .update(req.body)
             .then(_ => res.status(204).send())
             .catch(err => res.status(400).json(err))
     }
 
     const toggleUsuario = (req, res) => {
+        console.log(req.params.cpf)
         app.db('usuario')
-           .where({id_usuario: req.params.id_usuario})
+           .where({cpf: req.params.cpf})
            .first()
            .then(usuario => {
                if (!usuario) {
-                   const msg = `Usuario com id ${req.params.id_usuario} não encontrada.`
+                   const msg = `Usuario com id ${req.params.cpf} não encontrada.`
                    return res.status(400).send(msg) 
                }
 

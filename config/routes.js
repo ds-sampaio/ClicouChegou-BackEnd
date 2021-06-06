@@ -50,14 +50,14 @@ module.exports = app => {
        .get(app.api.usuario.PesqUsuario)
        .post(app.api.usuario.save)  
 
-    app.route('/usuario/:id_usuario')       
+    app.route('/usuario/:cpf')       
        .delete(app.api.usuario.remove)   
 
-    app.route('/usuario/:id_usuario')        
+    app.route('/usuario/:cpf')        
        .put(app.api.usuario.toggleUsuario)         
        
    app.route('/usucpf')        
-      .get(app.api.usuario.PesqUsuarioCpf)       
+      .post(app.api.usuario.PesqUsuarioCpf)       
        
     //Metodos configurações do usuario
     app.route('/configuracao')
@@ -71,8 +71,11 @@ module.exports = app => {
        .put(app.api.configuracao.toggleConfiguracao) 
        
     //Metodos tela home do usuario {produtos,fotos e valores}      
-    app.route('/homeusu')
+    app.route('/homeusu/:id_usuario')
        .get(app.api.homeusu.PesqHome)   
+    //Metodo que trás todas as configurações relativo a 1 usuario especifico
+    app.route('/ConfiguracoesUsuario')
+       .get(app.api.configuracao.PesqConfiguracaoUsu)      
        
        
     //Filtros para front-end usuario   
