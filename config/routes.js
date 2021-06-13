@@ -42,7 +42,26 @@ module.exports = app => {
   
       app.route('/pedidoloja')
          .all(app.config.passport.authenticate())
-         .get(app.api.pedidos.getpedidosloja)     
+         .get(app.api.pedidos.getpedidosloja)  
+         
+      app.route('/itenspedidos')
+         .all(app.config.passport.authenticate())
+         .post(app.api.pedidos.getItensPedidos)
+
+      app.route('/pedidostitle')
+         .all(app.config.passport.authenticate())
+         .get(app.api.pedidos.getpedidosTitle)   
+      
+      app.route('/vendas')
+         .all(app.config.passport.authenticate())
+         .get(app.api.pedidos.getvendas)    
+      
+       //atualiza todos os status do pedido referente ao usuario na data atual   
+       app.route('/vendas/:id_usuario') ///toggle
+          .all(app.config.passport.authenticate()) 
+          .put(app.api.pedidos.updateStatus)    
+          
+
        
        
     //Metodos usuarios
@@ -70,12 +89,20 @@ module.exports = app => {
     app.route('/configuracoes/:id_config')        
        .put(app.api.configuracao.toggleConfiguracao) 
        
+       
     //Metodos tela home do usuario {produtos,fotos e valores}      
     app.route('/homeusu/:id_usuario')
        .get(app.api.homeusu.PesqHome)   
     //Metodo que trás todas as configurações relativo a 1 usuario especifico
     app.route('/ConfiguracoesUsuario')
-       .get(app.api.configuracao.PesqConfiguracaoUsu)      
+       .get(app.api.configuracao.PesqConfiguracaoUsu)  
+    
+       //metodo confirma pedido
+    app.route('/confirmapedido/:id_usuario')
+       .put(app.api.homeusu.updatePedidoCompra)  
+       
+   app.route('/novopedido')
+       .post(app.api.homeusu.savepedido)     
        
        
     //Filtros para front-end usuario   
@@ -88,8 +115,12 @@ module.exports = app => {
     
     //pedidos do usuario   
     app.route('/pedidocompra')
-       .post(app.api.filtros.PedidoDeCompra)     
-          
+       .post(app.api.filtros.PedidoDeCompra)   
+       
+       
+    //busca ultimo pedido do usuario    
+    app.route('/atualizacao/:id_usuario')
+       .get(app.api.filtros.getAtualizacao)       
 
 
 }

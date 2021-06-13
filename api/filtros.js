@@ -39,6 +39,16 @@ module.exports = app => {
         
     }
 
+    const getAtualizacao = (req, res) => {
+        app.db('vendas')
+           .leftJoin('situacao', 'situacao.descricao', '=', 'vendas.status')  
+           .where({id_cliente: req.params.id_usuario})   
+           .orderBy('id_pedido', 'desc')
+           .limit(1)        
+           .then(atualizacao => res.json(atualizacao))
+           .catch(err => res.status(400).json(err))
+    }
+
     const getpedidosloja = (req, res) => {
         // app.db('pedidos')
         // .innerJoin('produtos', 'pedidos.id_produtos', '=', 'produtos.id_produtos') 
@@ -65,6 +75,6 @@ module.exports = app => {
      }   
 
     
-    return { getListProdutos, getListPedidos, PedidoDeCompra }
+    return { getListProdutos, getListPedidos, PedidoDeCompra,getAtualizacao }
 
 }

@@ -97,7 +97,7 @@ module.exports = app => {
            .first()
            .then(usuario => {
                if (!usuario) {
-                   const msg = `Usuario com id ${req.params.cpf} não encontrada.`
+                   const msg = `Usuario com CPF ${req.params.cpf} não encontrada.`
                    return res.status(400).send(msg) 
                }
 
