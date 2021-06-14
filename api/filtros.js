@@ -49,6 +49,15 @@ module.exports = app => {
            .catch(err => res.status(400).json(err))
     }
 
+    const getListaPedidos = (req, res) => {
+        app.db('historico') 
+           .where({id_usuario: req.params.id_usuario})   
+           .orderBy('datapedido', 'desc')
+           .limit(20)        
+           .then(lista => res.json(lista))
+           .catch(err => res.status(400).json(err))
+    }
+
     const getpedidosloja = (req, res) => {
         // app.db('pedidos')
         // .innerJoin('produtos', 'pedidos.id_produtos', '=', 'produtos.id_produtos') 
@@ -75,6 +84,6 @@ module.exports = app => {
      }   
 
     
-    return { getListProdutos, getListPedidos, PedidoDeCompra,getAtualizacao }
+    return { getListProdutos, getListPedidos, PedidoDeCompra,getAtualizacao, getListaPedidos }
 
 }

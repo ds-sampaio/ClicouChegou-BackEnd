@@ -74,7 +74,8 @@ module.exports = app => {
                    const msg = `Usuario com id ${req.body.id_usuario} não encontrado.`
                    return res.status(400).send(msg) 
                }            
-           })   
+           })          
+
         
 
             app.db('configuracoes')
@@ -86,7 +87,7 @@ module.exports = app => {
 
     const remove = (req, res) => {
         app.db('configuracoes')
-           .where({id_config:  req.params.id_config,id_usuario: req.body.id_usuario})
+           .where({id_config:  req.params.id_config}) //,id_usuario: req.body.id_usuario
            .del()
            .then(rowsDeleted => {
                if (rowsDeleted > 0) {
@@ -122,6 +123,22 @@ module.exports = app => {
            .catch(err => res.status(400).json(err))
     }
 
-    return { PesqConfiguracao, save, remove, toggleConfiguracao ,PesqConfiguracaoUsu}
+
+    const toggleSave = (req, res) => {
+        app.db('configuracoes')
+        .where({id_produtos: req.body.id_produtos, id_loja: req.body.id_loja,id_usuario: req.body.id_usuario})
+        .first()
+        .then(configuracoes => {
+            console.log(configuracoes)
+            if (configuracoes) {
+                const msg = `Produto com id ${req.body.id_produtos} não encontrado.`
+                return res.status(400).send(msg) 
+            } else {
+                save(req, res, req.body)
+            }           
+        })
+    }
+
+    return { PesqConfiguracao, toggleSave, remove, toggleConfiguracao ,PesqConfiguracaoUsu}
 
 }

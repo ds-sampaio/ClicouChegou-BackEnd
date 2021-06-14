@@ -123,6 +123,14 @@ module.exports = app => {
                 .then(pedidos => res.json(pedidos))
                 .catch(err => res.status(400).json(err))     }  
 
+    const RetVendas = (req, res) => {       
+        app.db('retornos')
+                .where({ 'retornos.id_loja': req.user.id })
+                .limit(30)
+                .then(pedidos => res.json(pedidos))
+                .catch(err => res.status(400).json(err))     }  
+                        
+
 
 
     const updateStatus = (req, res) => {                
@@ -145,6 +153,6 @@ module.exports = app => {
     }            
                            
 
-    return { getPedidos, save, remove, togglePedidos,getpedidosloja, getItensPedidos,getpedidosTitle,getvendas,updateStatus }
+    return { getPedidos, save, remove, togglePedidos,getpedidosloja, getItensPedidos,getpedidosTitle,getvendas,updateStatus, RetVendas }
 
 }

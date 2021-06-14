@@ -59,7 +59,12 @@ module.exports = app => {
        //atualiza todos os status do pedido referente ao usuario na data atual   
        app.route('/vendas/:id_usuario') ///toggle
           .all(app.config.passport.authenticate()) 
-          .put(app.api.pedidos.updateStatus)    
+          .put(app.api.pedidos.updateStatus)  
+          
+          
+      app.route('/retorno')
+      .all(app.config.passport.authenticate())
+      .get(app.api.pedidos.RetVendas)        
           
 
        
@@ -81,7 +86,7 @@ module.exports = app => {
     //Metodos configurações do usuario
     app.route('/configuracao')
        .get(app.api.configuracao.PesqConfiguracao)
-       .post(app.api.configuracao.save)  
+       .post(app.api.configuracao.toggleSave)  
 
     app.route('/configuracoes/:id_config')       
        .delete(app.api.configuracao.remove)   
@@ -121,6 +126,9 @@ module.exports = app => {
     //busca ultimo pedido do usuario    
     app.route('/atualizacao/:id_usuario')
        .get(app.api.filtros.getAtualizacao)       
-
+    
+     //busca os 20 ultimos pedidos do usuario    
+     app.route('/lista/:id_usuario')
+        .get(app.api.filtros.getListaPedidos)    
 
 }
