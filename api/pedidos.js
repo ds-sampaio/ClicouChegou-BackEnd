@@ -126,6 +126,7 @@ module.exports = app => {
     const RetVendas = (req, res) => {       
         app.db('retornos')
                 .where({ 'retornos.id_loja': req.user.id })
+                .orderBy('datapedido', 'asc')
                 .limit(30)
                 .then(pedidos => res.json(pedidos))
                 .catch(err => res.status(400).json(err))     }  

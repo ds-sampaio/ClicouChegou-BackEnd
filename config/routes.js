@@ -107,7 +107,12 @@ module.exports = app => {
        .put(app.api.homeusu.updatePedidoCompra)  
        
    app.route('/novopedido')
-       .post(app.api.homeusu.savepedido)     
+       .post(app.api.homeusu.savepedido)    
+   
+       //retorna quantidade ja pedida para o produto    
+   app.route('/verificacao/:id_usuario')
+      .post(app.api.homeusu.versavepedido)       
+           
        
        
     //Filtros para front-end usuario   

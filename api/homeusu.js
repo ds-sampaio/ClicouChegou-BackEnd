@@ -5,7 +5,8 @@ module.exports = app => {
     const getHome = (req, res) => {
         app.db('configuracoes')
         .innerJoin('produtos', 'configuracoes.id_produtos', '=', 'produtos.id_produtos') 
-        .where({id_usuario:  req.params.id_usuario})                                 
+        .innerJoin('loja', 'configuracoes.id_loja', '=', 'loja.id')
+        .where({id_usuario:  req.params.id_usuario, status:'Habilitado'})                                 
         .then(configuracoes => res.json(configuracoes))
         .catch(err => res.status(400).json(err))              
        
@@ -55,6 +56,19 @@ module.exports = app => {
            .catch(err => res.status(400).json(err))
     }
 
-    return { PesqHome ,updatePedidoCompra,savepedido}
+    //verifica se cliente pode efetuar mais de um produto no mesmo pedido
+    const versavepedido = (req, res) => {
+        app.db('verificacao')
+           .where({id_cliente: req.params.id_usuario,id_produtos: req.body.id_produtos})    
+           .then(atualizacao => res.json(atualizacao))
+           .catch(err => res.status(400).json(err))
+    }
+
+
+
+ 
+
+
+    return { PesqHome ,updatePedidoCompra,savepedido, versavepedido}
 
 }
